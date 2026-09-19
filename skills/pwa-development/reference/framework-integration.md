@@ -49,6 +49,73 @@ The plugin handles:
 - Injecting the manifest link into HTML
 - Auto-registration or prompt-based registration (`registerType: 'autoUpdate'` vs `'prompt'`)
 
+### Update Prompt (React + Vite)
+
+```typescript
+import { useRegisterSW } from 'virtual:pwa-register/react';
+
+function App() {
+  const { needRefresh: [needRefresh], updateServiceWorker } = useRegisterSW();
+  return needRefresh && (
+    <button onClick={() => updateServiceWorker(true)}>Update available</button>
+  );
+}
+```
+
+## Webpack
+
+```bash
+npm install -D workbox-webpack-plugin
+```
+
+```javascript
+// webpack.config.js
+const { GenerateSW } = require('workbox-webpack-plugin');
+
+module.exports = {
+  plugins: [
+    new GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/api\./,
+          handler: 'NetworkFirst'
+        },
+        {
+          urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'images',
+            expiration: { maxEntries: 50 }
+          }
+        }
+      ]
+    })
+  ]
+};
+```
+
+## Nuxt 3
+
+```bash
+npm install -D @vite-pwa/nuxt
+```
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['@vite-pwa/nuxt'],
+  pwa: {
+    manifest: {
+      name: 'My App',
+      short_name: 'App',
+      theme_color: '#000000'
+    }
+  }
+});
+```
+
 ## SvelteKit
 
 ```bash
@@ -101,3 +168,40 @@ Workbox runtime caching config from `workbox-and-caching.md` applies here too.
 - **Manifest location**: most frameworks expect `manifest.json` or
   `manifest.webmanifest` in the public/static directory. The `<link rel="manifest">`
   tag should be in the HTML `<head>`.
+
+## Icon Generation
+
+```bash
+npm install -D @vite-pwa/assets-generator
+```
+
+```typescript
+// pwa-assets.config.ts
+import { defineConfig, minimal2023Preset } from '@vite-pwa/assets-generator/config';
+
+export default defineConfig({
+  preset: minimal2023Preset,
+  images: ['public/logo.svg']
+});
+```
+
+```bash
+npx pwa-assets-generator
+```
+
+Generates all required icon sizes from a single SVG source. See
+`manifest-advanced.md` for the full icon size matrix.
+
+## Offline Fallback Page
+
+Configure Workbox to serve a fallback for failed navigations:
+
+```javascript
+workbox: {
+  navigateFallback: '/offline.html',
+  navigateFallbackDenylist: [/^\/api/]
+}
+```
+
+Create `public/offline.html` with a simple "You're offline" message and a
+retry button. Precache it so it's always available.

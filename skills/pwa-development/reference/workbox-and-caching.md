@@ -122,6 +122,51 @@ registerRoute(
 );
 ```
 
+## Additional Workbox Runtime Caching Examples
+
+```typescript
+workbox: {
+  runtimeCaching: [
+    // Google Fonts — cache for a year, they're versioned
+    {
+      urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'google-fonts-cache',
+        expiration: {
+          maxEntries: 10,
+          maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+        }
+      }
+    },
+    // API calls with network timeout fallback
+    {
+      urlPattern: /^https:\/\/api\..*/i,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'api-cache',
+        networkTimeoutSeconds: 5,
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 // 1 hour
+        }
+      }
+    }
+  ]
+}
+```
+
+## Cache Invalidation
+
+```typescript
+// Version your cache names to force invalidation on deploy
+const CACHE_VERSION = 'v1.2.3';
+workbox: {
+  cacheId: `my-app-${CACHE_VERSION}`,
+  cleanupOutdatedCaches: true
+}
+```
+
 ## Per-Strategy Code (Without Workbox)
 
 ### Cache First (Offline First)

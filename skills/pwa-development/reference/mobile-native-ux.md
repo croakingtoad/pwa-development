@@ -101,6 +101,11 @@ button, a {
   -webkit-user-select: none;
   user-select: none;
 }
+
+/* Disable callout on long press (images, links) */
+img, a {
+  -webkit-touch-callout: none;
+}
 ```
 
 ## Smooth Scrolling
@@ -121,6 +126,8 @@ have this behavior.
 ```css
 input, select, textarea {
   font-size: 16px;
+  -webkit-appearance: none; /* Remove iOS default styling */
+  border-radius: 0; /* Remove iOS rounded inputs */
 }
 ```
 
@@ -149,5 +156,31 @@ window.addEventListener('popstate', (event) => {
 // doesn't immediately exit
 if (window.matchMedia('(display-mode: standalone)').matches) {
   history.pushState(null, '', window.location.href);
+}
+```
+
+## Window Controls Overlay (Desktop PWA)
+
+On desktop, PWAs can use the title bar area for app content:
+
+```json
+{
+  "display_override": ["window-controls-overlay"],
+  "display": "standalone"
+}
+```
+
+```css
+.titlebar {
+  position: fixed;
+  top: 0;
+  left: env(titlebar-area-x, 0);
+  width: env(titlebar-area-width, 100%);
+  height: env(titlebar-area-height, 40px);
+  -webkit-app-region: drag;
+}
+
+.titlebar button {
+  -webkit-app-region: no-drag;
 }
 ```
