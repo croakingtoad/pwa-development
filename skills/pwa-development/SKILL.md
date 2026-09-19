@@ -8,7 +8,6 @@ description: >
   manifest, offline, installable, add to home screen, push notifications,
   Android, iOS.
 license: MIT
-paths: ["**/sw.*", "**/service-worker.*", "**/workbox-config.*", "**/manifest.json", "**/manifest.webmanifest"]
 ---
 
 # PWA Development
