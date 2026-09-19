@@ -27,31 +27,12 @@ the user says to.
 
 ## The Three Pillars
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  THE THREE PILLARS OF PWA                                       │
-│  ─────────────────────────────────────────────────────────────  │
-│                                                                 │
-│  1. HTTPS                                                       │
-│     Required for service workers and security.                  │
-│     localhost allowed for development.                          │
-│                                                                 │
-│  2. SERVICE WORKER                                              │
-│     JavaScript that runs in background.                         │
-│     Enables offline, caching, push notifications.               │
-│                                                                 │
-│  3. WEB APP MANIFEST                                            │
-│     JSON file describing app metadata.                          │
-│     Enables installation and app-like experience.               │
-├─────────────────────────────────────────────────────────────────┤
-│  INSTALLABILITY CRITERIA (Chrome)                               │
-│  ─────────────────────────────────────────────────────────────  │
-│  • HTTPS (or localhost)                                         │
-│  • Service worker with fetch handler                            │
-│  • Web app manifest with: name, icons (192px + 512px),          │
-│    start_url, display: standalone/fullscreen/minimal-ui         │
-└─────────────────────────────────────────────────────────────────┘
-```
+1. **HTTPS** — Required for service workers. localhost for dev.
+2. **Service Worker** — Background JS enabling offline, caching, push.
+3. **Web App Manifest** — JSON metadata enabling installation.
+
+**Installability (Chrome):** HTTPS + SW with fetch handler + manifest with
+`name`, `icons` (192 + 512px), `start_url`, `display` (standalone/fullscreen/minimal-ui).
 
 ## Diagnostic States
 
@@ -62,21 +43,17 @@ Use these to identify where an app stands and what to do next.
 **Symptoms:** No manifest.json, no service worker, online-only
 
 **Interventions:**
-- Create a manifest — see the minimal manifest below, or `reference/manifest-advanced.md` for full features
-- Add the essential HTML head tags below
-- Generate a basic service worker — see below
+- Create manifest (see below; `reference/manifest-advanced.md` for full features)
+- Add essential HTML head tags (below)
+- Add basic service worker (below)
 
 ### P1: Basic Manifest Only
 
 **Symptoms:** Manifest exists but SW missing, breaks offline
 
-**Key Questions:**
-- What content MUST be available offline?
-- What should always be fresh (network-first)?
-
 **Interventions:**
-- Implement the basic service worker below
-- Choose caching strategies per the decision table below
+- Implement basic service worker (below)
+- Choose caching strategies per decision table (below)
 - Add offline fallback page
 - See `reference/workbox-and-caching.md` for Workbox setup
 
@@ -85,28 +62,24 @@ Use these to identify where an app stands and what to do next.
 **Symptoms:** Stale content, unexpected caching behavior
 
 **Interventions:**
-- Map resources to strategies using the decision table below
+- Map resources to strategies (decision table below)
 - Add cache expiration and cleanup
-- See `reference/workbox-and-caching.md` for per-strategy code and Workbox config
+- See `reference/workbox-and-caching.md`
 
 ### P3: Update Problems
 
 **Symptoms:** Users stuck on old versions, multiple refreshes needed
 
 **Interventions:**
-- Implement skipWaiting/clients.claim appropriately
-- Add update notification UI
-- Handle "waiting" state properly
-- See `reference/testing-and-debugging.md` for the update-testing pattern
+- Implement skipWaiting/clients.claim with update notification UI
+- See `reference/testing-and-debugging.md` for update-testing pattern
 
 ### P4: Offline Data Gaps
 
 **Symptoms:** User actions lost offline, no sync indicator
 
 **Interventions:**
-- Implement IndexedDB for offline storage
-- Add Background Sync API
-- Create sync status UI
+- Implement IndexedDB for offline storage + Background Sync API
 - See `reference/workbox-and-caching.md` (background sync section)
 
 ### P5: Platform-Specific Issues
@@ -129,21 +102,14 @@ Use these to identify where an app stands and what to do next.
 ## Essential HTML Head
 
 ```html
-<head>
-  <!-- Viewport with safe area support -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#000000">
-
-  <!-- PWA capable -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="App Name">
-
-  <!-- Manifest & Icons -->
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="App Name">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
 ```
 
 ## Minimal Manifest
@@ -152,75 +118,43 @@ Use these to identify where an app stands and what to do next.
 {
   "name": "My Progressive Web App",
   "short_name": "MyPWA",
-  "description": "A description of what the app does",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
-    {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "/icons/icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
 ```
 
-For screenshots, shortcuts, share_target, protocol_handlers, and file_handlers,
-see `reference/manifest-advanced.md`.
+See `reference/manifest-advanced.md` for screenshots, shortcuts, share_target, and more.
 
 ## Basic Service Worker
 
 ```javascript
-// sw.js
 const CACHE_NAME = 'app-cache-v1';
-const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/styles/main.css',
-  '/scripts/app.js',
-  '/offline.html'
-];
+const STATIC_ASSETS = ['/', '/index.html', '/styles/main.css', '/scripts/app.js', '/offline.html'];
 
-// Install: Cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(STATIC_ASSETS))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS)).then(() => self.skipWaiting())
   );
 });
 
-// Activate: Clean old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
-      ))
-      .then(() => self.clients.claim())
+    caches.keys().then((keys) => Promise.all(
+      keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+    )).then(() => self.clients.claim())
   );
 });
 
-// Fetch: Serve from cache, fall back to network
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then((cached) => cached || fetch(event.request))
+    caches.match(event.request).then((cached) => cached || fetch(event.request))
       .catch(() => caches.match('/offline.html'))
   );
 });
@@ -230,16 +164,7 @@ self.addEventListener('fetch', (event) => {
 
 ```javascript
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      const registration = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/'
-      });
-      console.log('SW registered:', registration.scope);
-    } catch (error) {
-      console.error('SW registration failed:', error);
-    }
-  });
+  navigator.serviceWorker.register('/sw.js', { scope: '/' });
 }
 ```
 
@@ -247,13 +172,13 @@ if ('serviceWorker' in navigator) {
 
 | Strategy | Use Case | Behavior |
 |----------|----------|----------|
-| **Cache First** | Static assets (CSS, JS, images, fonts) | Serve from cache, fall back to network. Fast, may be stale |
-| **Network First** | API responses, dynamic content, user content | Try network, fall back to cache. Fresh, slower |
-| **Stale While Revalidate** | Semi-static content (avatars, articles) | Serve cache immediately, update in background |
-| **Network Only** | Auth, real-time data, analytics | Always use network, no caching |
-| **Cache Only** | Versioned/immutable assets | Only serve from cache, never updates |
+| **Cache First** | Static assets (CSS, JS, images, fonts) | Cache → network fallback |
+| **Network First** | API responses, dynamic content | Network → cache fallback |
+| **Stale While Revalidate** | Semi-static (avatars, articles) | Serve cache, update in background |
+| **Network Only** | Auth, real-time data, analytics | No caching |
+| **Cache Only** | Versioned/immutable assets | Cache only, never updates |
 
-For per-strategy code (with and without Workbox), see `reference/workbox-and-caching.md`.
+Per-strategy code: `reference/workbox-and-caching.md`.
 
 ## Install Prompt
 
@@ -268,19 +193,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 async function installApp() {
   if (!deferredPrompt) return;
-
   deferredPrompt.prompt();
   const { outcome } = await deferredPrompt.userChoice;
-
-  console.log(`User ${outcome === 'accepted' ? 'accepted' : 'dismissed'} install`);
   deferredPrompt = null;
   hideInstallButton();
 }
 
-window.addEventListener('appinstalled', () => {
-  console.log('App installed');
-  deferredPrompt = null;
-});
+window.addEventListener('appinstalled', () => { deferredPrompt = null; });
 ```
 
 ## Launch Checklist

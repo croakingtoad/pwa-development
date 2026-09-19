@@ -159,6 +159,7 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
 }
 ```
 
+<!-- NEW: not in original source repos -->
 ## Window Controls Overlay (Desktop PWA)
 
 On desktop, PWAs can use the title bar area for app content:

@@ -42,6 +42,7 @@ async function subscribeToPush() {
 }
 ```
 
+<!-- NEW: not in original source repos -->
 ### VAPID Key Helper
 
 ```javascript
@@ -76,6 +77,7 @@ self.addEventListener('push', (event) => {
 });
 ```
 
+<!-- NEW: not in original source repos -->
 ### Notification Options
 
 | Option | Description |
@@ -90,6 +92,7 @@ self.addEventListener('push', (event) => {
 | `renotify` | Re-alert for updated notification with same tag |
 | `data` | Arbitrary data passed to notification click handler |
 
+<!-- NEW: not in original source repos -->
 ### Android Notification Channels
 
 On Android 8+, notifications are organized into channels. The browser creates
@@ -108,6 +111,7 @@ self.addEventListener('notificationclick', (event) => {
 });
 ```
 
+<!-- NEW: not in original source repos -->
 ### Handle Action Buttons
 
 ```javascript

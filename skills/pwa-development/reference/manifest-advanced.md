@@ -107,6 +107,7 @@ center 80% of the image — the outer 20% is the **safe zone** that may be clipp
 by the OS. Place your logo/artwork within this inner area, and fill the safe zone
 with background color.
 
+<!-- NEW: not in original source repos -->
 A maskable icon should be a separate asset from your `"purpose": "any"` icon.
 Do not combine purposes (`"purpose": "any maskable"`) — this forces the
 any-purpose icon into the maskable safe zone, making it appear too small on

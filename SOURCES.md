@@ -8,4 +8,6 @@ This skill consolidates and rebalances content from three community PWA skills:
 | [sebastiaanwouters/dotagents](https://github.com/sebastiaanwouters/dotagents) | `pwa` | Essential HTML head, safe-area handling, touch targets, display-mode detection, iOS status bar, install prompt, testing snippets |
 | [alinaqi/maggy](https://github.com/alinaqi/maggy) | `pwa-development` | Three Pillars diagram, full manifest examples, Workbox config, push notifications, background sync, framework guides, common mistakes table |
 
-All three source skills are MIT-licensed.
+Licenses: alinaqi/maggy is MIT-licensed. jwynia/agent-skills and
+sebastiaanwouters/dotagents have no license file or license metadata in their
+repositories (as of 2026-09-19).

@@ -47,15 +47,16 @@ limitations and design for them rather than discovering breakage late.
 | Stale API responses | Use Network First for dynamic data, not Cache First |
 | Missing `start_url` tracking | Add query param: `/?source=pwa` to distinguish installed-app visits |
 | No update mechanism | Implement update detection + reload prompt (see `testing-and-debugging.md`) |
+<!-- NEW: not in original source repos -->
 | Combining `any` and `maskable` icon purpose | Use `"purpose": "maskable"` on a separate asset — combining them forces the any icon into the maskable safe zone, making it too small |
 
 ## Deduplication Notes
 
-"Cache never expires" (common mistake) and "The Immortal Cache" (named
+"Large cache size" (common mistake) and "The Immortal Cache" (named
 anti-pattern) are the same issue. The fix: use Workbox `ExpirationPlugin` with
 `maxEntries` and `maxAgeSeconds`, or manually version caches and clean up old
 ones in the `activate` event.
 
-"SW caches too aggressively" and "The Everything Cache" are the same issue.
-The fix: precache only the app shell, runtime-cache everything else with the
-right strategy.
+"SW caches too aggressively" (common mistake) and "The Everything Cache"
+(named anti-pattern) are the same issue. The fix: precache only the app shell,
+runtime-cache everything else with the right strategy.

@@ -49,6 +49,7 @@ The plugin handles:
 - Injecting the manifest link into HTML
 - Auto-registration or prompt-based registration (`registerType: 'autoUpdate'` vs `'prompt'`)
 
+<!-- NEW: not in original source repos -->
 ### Update Prompt (React + Vite)
 
 ```typescript
@@ -62,6 +63,7 @@ function App() {
 }
 ```
 
+<!-- NEW: not in original source repos -->
 ## Webpack
 
 ```bash
@@ -96,6 +98,7 @@ module.exports = {
 };
 ```
 
+<!-- NEW: not in original source repos -->
 ## Nuxt 3
 
 ```bash
@@ -116,6 +119,7 @@ export default defineNuxtConfig({
 });
 ```
 
+<!-- NEW: not in original source repos -->
 ## SvelteKit
 
 ```bash
@@ -169,6 +173,7 @@ Workbox runtime caching config from `workbox-and-caching.md` applies here too.
   `manifest.webmanifest` in the public/static directory. The `<link rel="manifest">`
   tag should be in the HTML `<head>`.
 
+<!-- NEW: not in original source repos -->
 ## Icon Generation
 
 ```bash
@@ -192,6 +197,7 @@ npx pwa-assets-generator
 Generates all required icon sizes from a single SVG source. See
 `manifest-advanced.md` for the full icon size matrix.
 
+<!-- NEW: not in original source repos -->
 ## Offline Fallback Page
 
 Configure Workbox to serve a fallback for failed navigations:
