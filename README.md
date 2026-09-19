@@ -1,30 +1,29 @@
 # pwa-development
 
-A [Claude Code skill](https://code.claude.com/docs/en/skills) for Progressive Web App development.
+An agent skill for Progressive Web App development. Works with any AI coding agent that supports the `SKILL.md` skill format, including [Claude Code](https://code.claude.com/docs/en/skills), Cursor, Windsurf, and others.
 
 Covers service workers, caching strategies, offline support, web app manifests, push notifications, installation prompts, and platform-specific guidance for both Android and iOS.
 
 ## Installation
 
-Copy the `skills/pwa-development/` directory into your project's `.claude/skills/` folder:
+Copy the `skills/pwa-development/` directory into your project's skills folder (e.g., `.claude/skills/` for Claude Code, or wherever your agent loads skills from):
 
 ```
-.claude/
-  skills/
-    pwa-development/
-      SKILL.md
-      reference/
-        manifest-advanced.md
-        workbox-and-caching.md
-        mobile-native-ux.md
-        platform-quirks.md
-        push-notifications.md
-        framework-integration.md
-        testing-and-debugging.md
-        anti-patterns.md
+skills/
+  pwa-development/
+    SKILL.md
+    reference/
+      manifest-advanced.md
+      workbox-and-caching.md
+      mobile-native-ux.md
+      platform-quirks.md
+      push-notifications.md
+      framework-integration.md
+      testing-and-debugging.md
+      anti-patterns.md
 ```
 
-The skill activates automatically when you work with service worker files, Workbox configs, or web app manifests. You can also invoke it by asking Claude to "make a PWA", "add offline support", or "create a service worker".
+The skill activates when you work with service worker files, Workbox configs, or web app manifests. You can also invoke it by asking your agent to "make a PWA", "add offline support", or "create a service worker".
 
 ## What's Included
 
